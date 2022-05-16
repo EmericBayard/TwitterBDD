@@ -49,6 +49,12 @@ SQLite est un ***moteur de base de données*** autonome. Donc pas besoin de conf
   
 ## Setup
 
+Si vous cloner ce repos, faites un 
+
+```bash
+    npm install
+```
+
 D'abord, créer votre répertoire de travail.
 
 ```bash
@@ -171,3 +177,114 @@ Pour cela, afin de structurer notre projet, nous allons créer deux répertoire 
 Une fois ceci fait, on va s'atteler à la connection à la base de donnée. Voici un schéma qui explique comment prisma interagi avec la BDD.
 
 <div style="text-align:center"><img src="./assets/img/FensWfo.png" /></div>
+
+
+La première chose à faire, importer PrismaClient pour initialiser notre base de données.
+
+```ts
+    import { PrismaClient } from '@prisma/client';
+```
+
+Ensuite, il faut déclarer une constante Prisma client que l'on va exporter.
+
+Retourner dans votre **index.ts** et importer votre constante.
+
+```ts
+    import { PRISMA }from './config/database/prisma';
+```
+
+Pour lancer votre serveur, créer une fonction main contenant un try/catch.
+
+```ts
+    function main() {
+        try{
+            //traitement
+        }
+        catch(error:any) {
+            //traitement erreur
+        }
+        finally{ 
+            //fin de traitement
+        }
+    }
+```
+Vous allez devoir compléter les commentaires pour faire votre traitement. 
+
+//traitement et création de notre utilisateur
+
+```ts
+    async function main() {
+    try {  
+        await createUser(PRISMA, 'https://img', "je m'apelle Emeric Bayard", 
+        "Emeric.Mush@allo.come",
+        "Doubidoubi123", "Emusk", "Superintendant");
+        console.log("👮‍♂️ : Mon utilisateur à bien été crée ! "+ new Date())
+    }
+    catch(error:any) {
+        throw new Error(error);
+    }
+    finally{
+        async () => {
+            await PRISMA.$disconnect();
+        }  
+    }
+}
+
+
+main()
+```
+
+## Créer une appi
+
+Pour pouvoir lancer votre serveur, installer express.
+
+```bash
+    npm i express 
+```
+
+Ensuite lorsque l'on travail en TS, il faut installer le package pour le typage de ce module.
+
+```bash
+    npm i --save-dev @types/express
+```
+
+Pour éviter d'avoir a kill et relancer notre serveur à chaque fois, on va installer nodemon.
+
+```bash
+    npm i --save-dev nodemon
+```
+
+Une  fois nodemon installé, nous allons implémenter notre design pattern.
+```bash
+    mkdir controllers && mkdir routes && mkdir services && cd routes && mkdir public && mkdir private && cd public && touch openRoutes.ts
+```
+
+Import le module express.
+
+```ts
+    import {Express, Request, Response} from 'express';     
+```
+
+Déclarer une fonction qui va gérer toutes mes routes non-restreintes.
+
+```ts
+    function openRoutes(app:Express) {
+    app.get('/', (req: Request, res: Response) => {
+        res.status(200).send({
+            'message':'Server is running successfully 🛣️'})
+    })
+}
+
+export default openRoutes;
+```
+
+Importer la fonction openRoutes dans index.ts.
+
+```ts
+    import  openRoutes  from './routes/public/openRoutes'
+```
+
+Appeler la fonction dans la fonction callback de APP.listen() et surprise : on peut tester notre route directement avec POSTMAN ou avec votre navigateur préféré. Votre première route est prête.
+
+
+
