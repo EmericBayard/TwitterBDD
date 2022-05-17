@@ -1,11 +1,12 @@
-import { PRISMA } from '../config/database/prisma';
+import { PrismaClient } from '@prisma/client'
 
+const prisma = new PrismaClient();
 
 export async function createUserPrisma() {
     try {
-        PRISMA.user.create({
+        const user = await prisma.user.create({
             data: {
-                profilePic: 'https://www.prisma.com/',
+                profilePic: 'hss',
                 bio: 'Je suis une théière',
                 email: 'theapot.com',
                 password: 'theatheathea',
@@ -13,11 +14,25 @@ export async function createUserPrisma() {
                 role: 'theamaster',
                 dob: new Date(),
                 lastUpdate: new Date(),
+                createdAt: new Date()
             },
         })
     }
     catch(error:any) {
+        console.log(error)
         throw new Error(error)
     } 
 }
 
+export async function getUserPrisma() {
+    let users: any[] = [];
+    try {
+        users = await prisma.user.findMany()
+    }
+    catch(error:any) {
+        console.log(error)
+        throw new Error(error)
+    } finally {
+        return users
+    }
+}

@@ -1,5 +1,5 @@
 import {Express, Request, Response} from 'express';
-import { userCreate } from '../../controllers/users'
+import { userCreate, getUser } from '../../controllers/users'
 
 function openRoutes(app:Express) {
     app.get('/', (req: Request, res: Response) => {
@@ -9,6 +9,10 @@ function openRoutes(app:Express) {
 
     app.post('/user/create', (req: Request, res: Response) => {
         userCreate(req, res);
+    })
+
+    app.get('/user', (req: Request, res: Response) => {
+        getUser(req, res);
     })
 }
 

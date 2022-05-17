@@ -215,10 +215,10 @@ Vous allez devoir compléter les commentaires pour faire votre traitement.
 ```ts
     async function main() {
     try {  
-        await createUser(PRISMA, 'https://img', "je m'apelle Emeric Bayard", 
-        "Emeric.Mush@allo.come",
-        "Doubidoubi123", "Emusk", "Superintendant");
-        console.log("👮‍♂️ : Mon utilisateur à bien été crée ! "+ new Date())
+        APP.listen(3000, () => {
+            console.log('✅ : Server is running on port 3000')
+            //traitement
+        }) 
     }
     catch(error:any) {
         throw new Error(error);
@@ -284,7 +284,7 @@ Importer la fonction openRoutes dans index.ts.
     import  openRoutes  from './routes/public/openRoutes'
 ```
 
-Appeler la fonction dans la fonction callback de APP.listen() et surprise : on peut tester notre route directement avec POSTMAN ou avec votre navigateur préféré. Votre première route est prête.
+Appeler la fonction dans la fonction callback de APP.listen() et surprise : on peut tester notre route directement avec POSTMAN ou avec votre navigateur préféré. Votre première route est prête ✅.
 
-
+<div style="text-align:center"><img src="./assets/img/Screenshot%202022-05-16%20at%2014.07.13.png" /></div>
 
